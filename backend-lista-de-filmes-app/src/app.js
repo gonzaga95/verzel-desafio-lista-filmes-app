@@ -15,4 +15,4 @@ app.listen(PORT, () => {
 });
 
 const movieRoutes = require('./routes/movieRoutes');
-app.use('/movies', movieRoutes);
+app.use('/api/movies', movieRoutes);

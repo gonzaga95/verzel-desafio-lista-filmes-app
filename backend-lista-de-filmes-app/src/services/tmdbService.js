@@ -1,15 +1,14 @@
 const axios = require('axios');
-const { response } = require('express');
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
 async function searchMovies(query) {
     if (!query) {
-        return {results : []};
+        return { results: [] };
     }
     try {
-        response = await axios.get(`${TMDB_BASE_URL}/search/movie`, {
+        const response = await axios.get(`${TMDB_BASE_URL}/search/movie`, {
             params: {
                 api_key: TMDB_API_KEY,
                 query: query,
@@ -21,7 +20,6 @@ async function searchMovies(query) {
         console.error('Erro ao buscar filmes:', error.message);
         throw new Error('Falha ao comunicar com o TMDB');
     }
-
 }
 
 module.exports = {
