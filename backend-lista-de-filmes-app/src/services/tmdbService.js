@@ -2,13 +2,22 @@ const axios = require('axios');
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
+const TMDB_AUTH_TOKEN = process.env.TMDB_BEARER_TOKEN;
+
+const tmdbAxios = axios.create({
+    baseURL: TMDB_BASE_URL,
+    headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${TMDB_AUTH_TOKEN}`
+    },
+});
 
 async function searchMovies(query) {
     if (!query) {
         return { results: [] };
     }
     try {
-        const response = await axios.get(`${TMDB_BASE_URL}/search/movie`, {
+        const response = await tmdbAxios.get('/search/movie', {
             params: {
                 api_key: TMDB_API_KEY,
                 query: query,
