@@ -1,19 +1,20 @@
 {
   "name": "backend-lista-de-filmes-app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/app.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Carlos E. G. Silva",
+  "license": "MIT",
   "description": "",
   "dependencies": {
     "axios": "^1.12.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mongoose": "^8.19.2"
   }
 }
