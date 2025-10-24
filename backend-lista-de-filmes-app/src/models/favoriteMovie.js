@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
 
 const favoriteMovieSchema = new mongoose.Schema({
+    userId: {  
+        type: String,
+        required: true,
+        index: true
+    },
     tmdb_id: {
         type: Number,
         required: true,
-        unique: true,
-    },
+        },
     title: {
         type: String,
         required: true,
@@ -19,6 +23,8 @@ const favoriteMovieSchema = new mongoose.Schema({
         default: Date.now,
     },
 });
+
+favoriteMovieSchema.index({ userId: 1, tmdb_id: 1 }, { unique: true });
 
 const FavoriteMovie = mongoose.model('FavoriteMovie', favoriteMovieSchema);
 

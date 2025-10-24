@@ -19,19 +19,20 @@ async function searchMovies(req, res) {
 async function addFavoriteMovie(req, res) {
 
     const { tmdb_id, title, rating } = req.body;
+    const userId = req.userId;
 
     if (!tmdb_id || !title) {
         return res.status(400).json({ error: 'ID e título são obrigatórios.' });
     }
 
     try {
-        const existingMovie = await favoriteMovie.findOne({ tmdb_id });
+        const existingMovie = await favoriteMovie.findOne({ tmdb_id, userId });
 
         if (existingMovie) {
             return res.status(409).json({ error: 'Filme já está na lista de favoritos.' });
         }
 
-        const newFavoriteMovie = new favoriteMovie({ tmdb_id, title, rating: rating || 0 });
+        const newFavoriteMovie = new favoriteMovie({ tmdb_id, title, rating: rating || 0, userId });
         await newFavoriteMovie.save();
 
         res.status(201).json(newFavoriteMovie);
@@ -43,9 +44,13 @@ async function addFavoriteMovie(req, res) {
 }
 
 async function getFavoriteMovies(req, res) {
+    const userId = req.userId;
+
     try {
-        const favoriteMovies = await favoriteMovie.find({}).sort({ addDate: -1 });
+        const favoriteMovies = await favoriteMovie.find({ userId: userId }).sort({ addDate: -1 });
+        
         res.json(favoriteMovies);
+
     } catch (error) {
         console.error(error.message);
         res.status(500).json({ message: "Erro ao buscar filmes favoritos" });
@@ -54,13 +59,14 @@ async function getFavoriteMovies(req, res) {
 
 async function deleteFavoriteMovie(req, res) {
     const { tmdb_id } = req.params;
+    const userId = req.userId;
 
     if (!tmdb_id) {
         return res.status(400).json({ error: 'ID do filme é obrigatório.' });
     }
 
     try {
-        const deletedMovie = await favoriteMovie.findOneAndDelete({ tmdb_id });
+        const deletedMovie = await favoriteMovie.findOneAndDelete({ tmdb_id, userId });
 
         if (!deletedMovie) {
             return res.status(404).json({ error: 'Filme não encontrado na lista de favoritos.' });
