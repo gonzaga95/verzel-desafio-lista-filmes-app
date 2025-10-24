@@ -1,6 +1,5 @@
 const axios = require('axios');
 
-const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const TMDB_AUTH_TOKEN = process.env.TMDB_BEARER_TOKEN;
 
@@ -19,7 +18,6 @@ async function searchMovies(query) {
     try {
         const response = await tmdbAxios.get('/search/movie', {
             params: {
-                api_key: TMDB_API_KEY,
                 query: query,
                 language: 'pt-BR',
             },
