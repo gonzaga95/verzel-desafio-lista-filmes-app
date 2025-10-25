@@ -1,48 +1,90 @@
 # 🎬 Lista de Filmes App
 
+> **⚠️ Projeto em Desenvolvimento**
+
 ## 🎯 Proposta do Projeto
 
-Este projeto está sendo desenvolvido como parte do **Desafio Elite Dev 2025** da Verzel. O objetivo principal é construir uma aplicação Full-Stack que permita aos usuários pesquisar filmes, visualizar seus detalhes e gerenciar uma lista de favoritos, utilizando a API pública do The Movie Database (TMDB).
+Este projeto está sendo desenvolvido como parte do **Desafio Elite Dev 2025** da Verzel. O objetivo é construir uma aplicação Full-Stack que permita aos usuários pesquisar filmes, visualizar seus detalhes e gerenciar uma lista de favoritos, utilizando a API pública do **The Movie Database (TMDB)**.
 
 ## 💻 Tecnologias Utilizadas
 
-Este projeto é uma aplicação Full-Stack que utiliza a arquitetura de **Monorepo**, dividindo a responsabilidade entre o Front-End e o Back-End.
-
-| Camada | Tecnologia | Framework/Biblioteca Principal |
+| Camada | Tecnologia | Framework/Biblioteca |
 | :--- | :--- | :--- |
-| **Front-End** | JavaScript | React |
-| **Back-End** | JavaScript | Node.js (Express) |
-| **Banco de Dados** | A definir | A definir |
+| **Front-End** | JavaScript | React *(a ser implementado)* |
+| **Back-End** | JavaScript | Node.js + Express.js |
+| **Banco de Dados** | NoSQL | MongoDB Atlas + Mongoose |
+| **Autenticação** | Custom Middleware | Header-based (X-User-ID) |
+| **Integração Externa** | TMDB API | Axios |
 
 ---
 
-## ⚙️ Requisitos Funcionais
+## ✅ Status de Implementação
 
-A aplicação foi estruturada para cumprir os seguintes requisitos:
+### Back-End (Completo)
 
-### Front-End (React)
+- ✅ Integração com TMDB API (busca de filmes)
+- ✅ CRUD completo de filmes favoritos
+- ✅ Sistema de autenticação por header (X-User-ID)
+- ✅ Compartilhamento de listas via link único (UUID)
+- ✅ Ativação/desativação de listas compartilhadas
+- ✅ Banco de dados MongoDB Atlas configurado
+- ✅ Middleware de autenticação implementado
 
-* **Interface de Pesquisa:** Tela dedicada para busca de filmes.
-* **Exibição de Detalhes:** Apresentação clara do título, sinopse e, principalmente, a **nota do TMDB (rating)** de forma destacada.
-* **Gerenciamento de Favoritos:** Funcionalidade para adicionar e remover filmes da lista de favoritos do usuário.
+### Front-End
 
-### Back-End (Node.js/Express)
-
-* **Gestão de API:** Responsável por intermediar todas as chamadas para a API do TMDB.
-* **Armazenamento de Dados:** Persistência da lista de filmes favoritos no Banco de Dados.
-* **Compartilhamento:** Implementação de lógica para gerar um *link* único que permita ao usuário compartilhar sua lista de favoritos.
+- ⏳ A ser desenvolvido
 
 ---
 
-## 🧱 Estrutura do Projeto
+## 🎯 Requisitos Funcionais (Back-End)
 
-O projeto adota uma estrutura de Monorepo com duas pastas principais:
+### ✅ Gestão de Filmes
+- Busca de filmes na API do TMDB
+- Armazenamento de filmes favoritos por usuário
+- Gerenciamento completo (adicionar, listar, remover)
 
-1.  `frontend/`: Contém todo o código da interface do usuário (React Components).
-2.  `backend/`: Contém o código da API (Rotas, Services e Models em Node.js).
+### ✅ Sistema de Compartilhamento
+- Geração de link único (UUID) para compartilhar lista de favoritos
+- Controle de visibilidade (ativar/desativar compartilhamento)
+- Acesso público somente leitura via token
+- Nome personalizável para listas compartilhadas
 
-### Próximos Passos (Para Implementação e Detalhamento)
+### ✅ Autenticação
+- Middleware de identificação de usuário via header `X-User-ID`
+- Isolamento de dados por usuário
 
-* Definir e documentar as rotas da API.
+---
+
+## 🗄️ Modelos de Dados (MongoDB)
+
+### FavoriteMovie
+```javascript
+{
+  userId: String,        // Identificador do usuário
+  tmdb_id: Number,       // ID do filme no TMDB
+  title: String,         // Título do filme
+  rating: Number,        // Nota do filme
+  addDate: Date          // Data de adição (auto)
+}
+```
+
+**Índice único:** `{ userId, tmdb_id }` - Previne duplicatas por usuário
+
+### SharedList
+```javascript
+{
+  userId: String,        // Dono da lista
+  shareToken: String,    // UUID único para compartilhamento
+  isActive: Boolean,     // Controle de visibilidade
+  listName: String       // Nome da lista compartilhada
+}
+```
+
+---
+
+## 🚀 Próximos Passos (Para Implementação e Detalhamento)
+
+* Documentar as rotas da API e estrutura do projeto.
+* Implementar Front-End em React.
 * Incluir instruções de instalação e execução para as camadas Front-End e Back-End.
-* Detalhar a configuração e o uso do Banco de Dados escolhido.
+* Implementar testes funcionais.
