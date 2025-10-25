@@ -1,5 +1,5 @@
 const tmdbService = require('../services/tmdbService');
-const favoriteMovie = require('../models/favoriteMovie');
+const favoriteMovieModel = require('../models/favoriteMovieModel');
 
 async function searchMovies(req, res) {
     const {query} = req.query;
@@ -26,13 +26,13 @@ async function addFavoriteMovie(req, res) {
     }
 
     try {
-        const existingMovie = await favoriteMovie.findOne({ tmdb_id, userId });
+        const existingMovie = await favoriteMovieModel.findOne({ tmdb_id, userId });
 
         if (existingMovie) {
             return res.status(409).json({ error: 'Filme já está na lista de favoritos.' });
         }
 
-        const newFavoriteMovie = new favoriteMovie({ tmdb_id, title, rating: rating || 0, userId });
+        const newFavoriteMovie = new favoriteMovieModel({ tmdb_id, title, rating: rating || 0, userId });
         await newFavoriteMovie.save();
 
         res.status(201).json(newFavoriteMovie);
@@ -47,7 +47,7 @@ async function getFavoriteMovies(req, res) {
     const userId = req.userId;
 
     try {
-        const favoriteMovies = await favoriteMovie.find({ userId: userId }).sort({ addDate: -1 });
+        const favoriteMovies = await favoriteMovieModel.find({ userId: userId }).sort({ addDate: -1 });
         
         res.json(favoriteMovies);
 
@@ -66,7 +66,7 @@ async function deleteFavoriteMovie(req, res) {
     }
 
     try {
-        const deletedMovie = await favoriteMovie.findOneAndDelete({ tmdb_id, userId });
+        const deletedMovie = await favoriteMovieModel.findOneAndDelete({ tmdb_id, userId });
 
         if (!deletedMovie) {
             return res.status(404).json({ error: 'Filme não encontrado na lista de favoritos.' });
