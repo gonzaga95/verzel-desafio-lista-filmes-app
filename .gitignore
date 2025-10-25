@@ -34,3 +34,7 @@ lerna-debug.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+# Vite
+.vite/
+*.local
