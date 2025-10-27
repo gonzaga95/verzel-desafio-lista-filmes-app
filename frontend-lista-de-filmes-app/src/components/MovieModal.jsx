@@ -7,6 +7,7 @@ export default function MovieModal({
   isOpen,
   onClose,
   onAddFavorite,
+  onRemoveFavorite,
   isFavorite,
 }) {
   useEffect(() => {
@@ -29,6 +30,14 @@ export default function MovieModal({
   const year = movie.release_date ? movie.release_date.slice(0, 4) : '—';
   const rating = movie.vote_average?.toFixed(1) ?? '—';
 
+  const handleFavoriteToggle = () => {
+    if (isFavorite) {
+      onRemoveFavorite(movie.tmdb_id);
+    } else {
+      onAddFavorite(movie);
+    }
+  };
+
   return (
     <div className="movie-modal" onClick={onClose}>
       <article onClick={e => e.stopPropagation()}>
@@ -44,8 +53,14 @@ export default function MovieModal({
             </p>
             <p>{movie.overview || 'Sem sinopse disponível.'}</p>
 
-            <button onClick={() => onAddFavorite(movie)} disabled={isFavorite}>
-              {isFavorite ? 'Favorito ❤️' : '+ Adicionar aos Favoritos'}
+            <button
+              onClick={handleFavoriteToggle}
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
+              {isFavorite
+                ? 'Remover dos Favoritos ❤️'
+                : '+ Adicionar aos Favoritos'}
             </button>
           </div>
         </section>
