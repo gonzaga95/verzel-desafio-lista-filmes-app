@@ -64,7 +64,7 @@ export default function MovieModal({
                 ? hover
                   ? '- Remover dos Favoritos'
                   : 'Filme favorito'
-                : 'Adicionar aos Favoritos'}
+                : '+ Adicionar aos Favoritos'}
             </button>
           </div>
         </section>
