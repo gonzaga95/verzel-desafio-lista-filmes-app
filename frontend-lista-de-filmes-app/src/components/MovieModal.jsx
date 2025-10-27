@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const IMG_BASE = 'https://image.tmdb.org/t/p/w500';
 
@@ -10,6 +10,8 @@ export default function MovieModal({
   onRemoveFavorite,
   isFavorite,
 }) {
+  const [hover, setHover] = useState(false);
+
   useEffect(() => {
     const handleEsc = e => {
       if (e.key === 'Escape') onClose();
@@ -59,8 +61,10 @@ export default function MovieModal({
               onMouseLeave={() => setHover(false)}
             >
               {isFavorite
-                ? 'Remover dos Favoritos ❤️'
-                : '+ Adicionar aos Favoritos'}
+                ? hover
+                  ? '- Remover dos Favoritos'
+                  : 'Filme favorito'
+                : 'Adicionar aos Favoritos'}
             </button>
           </div>
         </section>
