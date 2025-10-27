@@ -34,6 +34,7 @@ lerna-debug.log*
 *.ntvs*
 *.njsproj
 *.sln
+.prettierrc
 
 # Vite
 .vite/
