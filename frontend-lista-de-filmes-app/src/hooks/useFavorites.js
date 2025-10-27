@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { movieAppService } from '../services/movieAppService';
 
 export function useFavorites() {
@@ -6,21 +6,22 @@ export function useFavorites() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const loadFavorites = useCallback(async () => {
+  async function loadFavorites() {
     setLoading(true);
     setError('');
+
     try {
-      const { data } = await movieAppService.getFavorites();
-      setFavorites(data || []);
+      const response = await movieAppService.getFavorites();
+      setFavorites(response.data || []);
     } catch (err) {
-      setError('Falha ao carregar favoritos.');
       console.error('Erro ao carregar favoritos:', err);
+      setError('Falha ao carregar favoritos.');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }
 
-  const addFavorite = async movie => {
+  async function addFavorite(movie) {
     try {
       await movieAppService.addFavorite(movie);
       await loadFavorites();
@@ -33,9 +34,9 @@ export function useFavorites() {
       console.error('Erro ao adicionar favorito:', err);
       return false;
     }
-  };
+  }
 
-  const removeFavorite = async tmdbId => {
+  async function removeFavorite(tmdbId) {
     try {
       await movieAppService.removeFavorite(tmdbId);
       await loadFavorites();
@@ -44,15 +45,15 @@ export function useFavorites() {
       console.error('Erro ao remover favorito:', err);
       return false;
     }
-  };
+  }
 
-  const isFavorite = tmdbId => {
+  function isFavorite(tmdbId) {
     return favorites.some(fav => fav.tmdb_id === tmdbId);
-  };
+  }
 
   useEffect(() => {
     loadFavorites();
-  }, [loadFavorites]);
+  }, []);
 
   return {
     favorites,
