@@ -34,8 +34,9 @@ export default function MovieModal({
 
   const handleFavoriteToggle = () => {
     if (isFavorite) {
-      onRemoveFavorite(movie.tmdb_id);
+      onRemoveFavorite(movie.id);
     } else {
+      console.log('Adding favorite:', movie);
       onAddFavorite(movie);
     }
   };

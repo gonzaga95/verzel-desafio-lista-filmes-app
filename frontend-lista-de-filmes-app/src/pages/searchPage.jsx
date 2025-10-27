@@ -8,7 +8,7 @@ import { useFavorites } from '../hooks/useFavorites';
 
 export default function SearchPage() {
   const { movies, loading, error, searchMovies } = useMoviesSearch();
-  const { addFavorite, isFavorite, favorites } = useFavorites();
+  const { addFavorite, removeFavorite, isFavorite, favorites } = useFavorites();
 
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,6 +25,10 @@ export default function SearchPage() {
 
   const handleAddFavorite = async movie => {
     await addFavorite(movie);
+  };
+
+  const handleRemoveFavorite = async tmdbId => {
+    await removeFavorite(tmdbId);
   };
 
   return (
@@ -52,6 +56,7 @@ export default function SearchPage() {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onAddFavorite={handleAddFavorite}
+        onRemoveFavorite={handleRemoveFavorite}
         isFavorite={selectedMovie ? isFavorite(selectedMovie.id) : false}
       />
     </section>
