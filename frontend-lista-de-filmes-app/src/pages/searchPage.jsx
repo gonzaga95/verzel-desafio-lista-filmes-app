@@ -4,11 +4,12 @@ import SearchBar from '../components/SearchBar';
 import MovieList from '../components/MovieList';
 import MovieModal from '../components/MovieModal';
 import { useMoviesSearch } from '../hooks/useMoviesSearch';
-import { useFavorites } from '../hooks/useFavorites';
+import { useFavoritesMovies } from '../hooks/useFavoritesMovies';
 
 export default function SearchPage() {
   const { movies, loading, error, searchMovies } = useMoviesSearch();
-  const { addFavorite, removeFavorite, isFavorite, favorites } = useFavorites();
+  const { addFavorite, removeFavorite, isFavorite, favorites } =
+    useFavoritesMovies();
 
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
