@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useFavorites } from '../hooks/useFavorites';
 import { formatAddDate } from '../utils/formatAddDate';
 
-const BASE_SHARE_URL = import.meta.env.SHARE_URL_BASE;
+const BASE_SHARE_URL = 'http://localhost:5173/share/';
 
 export default function FavoritesPage() {
   const {
