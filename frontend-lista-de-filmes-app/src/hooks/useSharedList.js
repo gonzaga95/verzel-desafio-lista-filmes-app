@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { movieAppService } from '../services/movieAppService';
+import { sharedListService } from '../services/sharedListService';
 
 export function useSharedList(shareToken) {
   const [listData, setListData] = useState(null);
@@ -17,7 +17,7 @@ export function useSharedList(shareToken) {
       setLoading(true);
       setError('');
       try {
-        const response = await movieAppService.getSharedList(shareToken);
+        const response = await sharedListService.getSharedList(shareToken);
         setListData(response.data);
       } catch (err) {
         console.error('Erro ao carregar lista compartilhada:', err);

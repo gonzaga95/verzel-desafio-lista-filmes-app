@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { movieAppService } from '../services/movieAppService';
+import { movieService } from '../services/movieService';
 
 export function useMoviesSearch() {
   const [movies, setMovies] = useState([]);
@@ -13,7 +13,7 @@ export function useMoviesSearch() {
     setError('');
 
     try {
-      const { data } = await movieAppService.searchMovies(query);
+      const { data } = await movieService.searchMovies(query);
       setMovies(data.results || []);
     } catch (err) {
       setError('Falha ao buscar filmes. Verifique se o backend está rodando.');
