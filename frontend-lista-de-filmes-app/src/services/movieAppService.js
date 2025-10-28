@@ -30,6 +30,26 @@ export const movieAppService = {
     client.delete(`/movies/favorites/${tmdbId}`, {
       headers: { 'X-User-ID': getUserId() },
     }),
+
+  getOrCreateShareLink: listName =>
+    client.post(
+      '/shared-lists/create-link',
+      { listName: listName },
+      {
+        headers: { 'X-User-ID': getUserId() },
+      }
+    ),
+
+  toggleShareStatus: isActive =>
+    client.patch(
+      '/shared-lists/toggle-share-status',
+      { isActive: isActive },
+      {
+        headers: { 'X-User-ID': getUserId() },
+      }
+    ),
+
+  getSharedList: shareToken => client.get(`/shared-lists/${shareToken}`),
 };
 
 export default client;

@@ -6,6 +6,9 @@ export function useFavorites() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const [sharedLink, setSharedLink] = useState(null);
+  const [shareLoading, setShareLoading] = useState(false);
+
   async function loadFavorites() {
     setLoading(true);
     setError('');
@@ -51,8 +54,52 @@ export function useFavorites() {
     return favorites.some(fav => fav.tmdb_id === tmdbId);
   }
 
+  async function loadSharedLink() {
+    try {
+      const response = await movieAppService.getOrCreateShareLink(
+        'Minha Lista'
+      );
+      setSharedLink(response.data);
+    } catch (err) {
+      console.warn(
+        'Link de compartilhamento não encontrado/criado ainda.',
+        err
+      );
+      setSharedLink(null);
+    }
+  }
+
+  async function toggleLinkStatus(isActive) {
+    setShareLoading(true);
+    try {
+      const response = await movieAppService.toggleShareStatus(isActive);
+      setSharedLink(prev => ({ ...prev, isActive: response.data.isActive }));
+      return true;
+    } catch (err) {
+      console.error('Erro ao alternar status de compartilhamento:', err);
+      return false;
+    } finally {
+      setShareLoading(false);
+    }
+  }
+
+  async function createShareLink(listName) {
+    setShareLoading(true);
+    try {
+      const response = await movieAppService.getOrCreateShareLink(listName);
+      setSharedLink(response.data); // O backend retorna o token e status
+      return true;
+    } catch (err) {
+      console.error('Erro ao criar link:', err);
+      return false;
+    } finally {
+      setShareLoading(false);
+    }
+  }
+
   useEffect(() => {
     loadFavorites();
+    loadSharedLink();
   }, []);
 
   return {
@@ -63,5 +110,9 @@ export function useFavorites() {
     removeFavorite,
     isFavorite,
     loadFavorites,
+    sharedLink,
+    shareLoading,
+    createShareLink,
+    toggleLinkStatus,
   };
 }
