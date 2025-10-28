@@ -1,5 +1,5 @@
 import { api } from './api';
-import { getUserId } from '../utils/userUtils';
+import { getUserId } from '../utils/userIdStorage';
 
 export const favoritesService = {
   getFavorites: () =>
