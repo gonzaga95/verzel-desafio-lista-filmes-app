@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useFavorites } from '../hooks/useFavorites';
 import { formatAddDate } from '../utils/formatAddDate';
 
@@ -13,6 +13,7 @@ export default function FavoritesPage() {
     sharedLink,
     createShareLink,
     toggleLinkStatus,
+    updateShareLinkName,
     shareLoading,
   } = useFavorites();
 
@@ -36,8 +37,29 @@ export default function FavoritesPage() {
 
   const handleTogglePublic = async e => {
     const isActive = e.target.checked;
-    console.log('Toggling link status to:', isActive);
     await toggleLinkStatus(isActive);
+  };
+
+  useEffect(() => {
+    if (!sharedLink) return;
+
+    const delayDebounce = setTimeout(() => {
+      if (listNameInput !== sharedLink.listName) {
+        updateShareLinkName(listNameInput);
+      }
+    }, 800);
+
+    return () => clearTimeout(delayDebounce);
+  }, [listNameInput]);
+
+  useEffect(() => {
+    if (sharedLink && listNameInput === '') {
+      setListNameInput(sharedLink.listName);
+    }
+  }, [sharedLink]);
+
+  const handleInputChange = e => {
+    setListNameInput(e.target.value);
   };
 
   const handleCopyLink = () => {
@@ -88,6 +110,14 @@ export default function FavoritesPage() {
           <button className="share-button-copy-link" onClick={handleCopyLink}>
             Copiar
           </button>
+
+          <p>Defina um nome para sua lista: </p>
+          <input
+            type="text"
+            value={listNameInput}
+            onChange={e => handleInputChange(e)}
+            placeholder="Nome da Lista"
+          />
 
           <label>
             <input
