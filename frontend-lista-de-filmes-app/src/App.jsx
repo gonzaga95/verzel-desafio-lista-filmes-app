@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import SearchPage from './pages/SearchPage';
 import FavoritesPage from './pages/FavoritesPage';
+import SharedListPage from './pages/SharedListPage';
 
 export default function App() {
   return (
@@ -10,6 +11,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<SearchPage />} />
           <Route path="/favoritos" element={<FavoritesPage />} />
+          <Route path="/share/:shareToken" element={<SharedListPage />} />
         </Routes>
       </MainLayout>
     </Router>
