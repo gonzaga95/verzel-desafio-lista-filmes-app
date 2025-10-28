@@ -20,5 +20,14 @@ export const sharedListService = {
       }
     ),
 
+  updateSharedListName: listName =>
+    api.patch(
+      '/shared-lists/update-name',
+      { listName: listName },
+      {
+        headers: { 'X-User-ID': getUserId() },
+      }
+    ),
+
   getSharedList: shareToken => api.get(`/shared-lists/${shareToken}`),
 };

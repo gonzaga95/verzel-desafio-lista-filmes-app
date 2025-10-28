@@ -48,6 +48,20 @@ export function useSharedListActions() {
     }
   }
 
+  async function updateShareLinkName(listName) {
+    setShareLoading(true);
+    try {
+      const response = await sharedListService.updateSharedListName(listName);
+      setSharedLink(prev => ({ ...prev, listName: response.data.listName }));
+      return true;
+    } catch (err) {
+      console.error('Erro ao atualizar nome da lista:', err);
+      return false;
+    } finally {
+      setShareLoading(false);
+    }
+  }
+
   useEffect(() => {
     loadSharedLink();
   }, []);
@@ -57,5 +71,6 @@ export function useSharedListActions() {
     shareLoading,
     createShareLink,
     toggleLinkStatus,
+    updateShareLinkName,
   };
 }

@@ -5,10 +5,25 @@ const extractUserId = require('../middlewares/authMiddlewere');
 
 // Rotas protegidas com extractUserId middleware
 // Rota para criar uma lista compartilhada /shared-lists
-router.post('/create-link', extractUserId, sharedListController.createSharedList);
+router.post(
+  '/create-link',
+  extractUserId,
+  sharedListController.createSharedList
+);
 
 // Rota para atualizar o status de compartilhamento
-router.patch('/toggle-share-status', extractUserId, sharedListController.toggleShareStatus);
+router.patch(
+  '/toggle-share-status',
+  extractUserId,
+  sharedListController.toggleShareStatus
+);
+
+// Rota para atualizar o nome da lista compartilhada
+router.patch(
+  '/update-name',
+  extractUserId,
+  sharedListController.updateSharedListName
+);
 
 // Rota pública
 // Rota para obter uma lista compartilhada
