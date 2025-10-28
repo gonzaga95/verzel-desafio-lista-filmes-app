@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { favoritesService } from '../services/favoritesService';
 
-export function useFavoriteMovies() {
+export function useFavoritesMovies() {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

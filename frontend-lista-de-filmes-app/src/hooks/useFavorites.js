@@ -1,8 +1,8 @@
-import { useFavoriteMovies } from './useFavoritesMovies';
+import { useFavoritesMovies } from './useFavoritesMovies';
 import { useSharedListActions } from './useSharedListActions';
 
 export function useFavorites() {
-  const movieActions = useFavoriteMovies();
+  const movieActions = useFavoritesMovies();
 
   const sharedListActions = useSharedListActions();
 
