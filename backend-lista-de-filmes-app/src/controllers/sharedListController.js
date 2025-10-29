@@ -5,9 +5,9 @@ async function createSharedList(req, res) {
   const userId = req.userId;
   const { listName } = req.body;
 
-  if (!listName) {
-    return res.status(400).json({ error: 'O nome da lista é obrigatório.' });
-  }
+  // if (!listName) {
+  //   return res.status(400).json({ error: 'O nome da lista é obrigatório.' });
+  // }
 
   try {
     let sharedList = await sharedListModel.findOne({ userId });

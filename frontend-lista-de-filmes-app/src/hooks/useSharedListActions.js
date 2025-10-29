@@ -7,9 +7,7 @@ export function useSharedListActions() {
 
   async function loadSharedLink() {
     try {
-      const response = await sharedListService.getOrCreateShareLink(
-        'Minha Lista'
-      );
+      const response = await sharedListService.getOrCreateShareLink();
       setSharedLink(response.data);
     } catch (err) {
       console.warn(
@@ -49,6 +47,10 @@ export function useSharedListActions() {
   }
 
   async function updateShareLinkName(listName) {
+    if (!listName || listName.trim() === '') {
+      return false;
+    }
+
     setShareLoading(true);
     try {
       const response = await sharedListService.updateSharedListName(listName);

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import { useFavorites } from '../hooks/useFavorites';
 import { formatAddDate } from '../utils/formatAddDate';
 
@@ -44,23 +44,19 @@ export default function FavoritesPage() {
     if (!sharedLink) return;
 
     const delayDebounce = setTimeout(() => {
-      if (listNameInput !== sharedLink.listName) {
+      if (listNameInput && listNameInput !== sharedLink.listName) {
         updateShareLinkName(listNameInput);
       }
     }, 800);
 
     return () => clearTimeout(delayDebounce);
-  }, [listNameInput]);
+  }, [listNameInput, sharedLink, updateShareLinkName]);
 
   useEffect(() => {
-    if (sharedLink && listNameInput === '') {
+    if (sharedLink && !listNameInput) {
       setListNameInput(sharedLink.listName);
     }
   }, [sharedLink]);
-
-  const handleInputChange = e => {
-    setListNameInput(e.target.value);
-  };
 
   const handleCopyLink = () => {
     const fullLink = `${BASE_SHARE_URL}${sharedLink.shareToken}`;
@@ -100,24 +96,24 @@ export default function FavoritesPage() {
       </div>
 
       {sharedLink && showShareOptions && (
-        <div className="share-button">
-          <h4>Link de Compartilhamento</h4>
+        <div className="share-options">
+          <h4>Link da sua lista</h4>
 
-          <p className="share-button-link">
+          <p className="share-link">
             {`${BASE_SHARE_URL}${sharedLink.shareToken}`}
           </p>
 
-          <button className="share-button-copy-link" onClick={handleCopyLink}>
-            Copiar
-          </button>
+          <button onClick={handleCopyLink}>Copiar</button>
 
-          <p>Defina um nome para sua lista: </p>
-          <input
-            type="text"
-            value={listNameInput}
-            onChange={e => handleInputChange(e)}
-            placeholder="Nome da Lista"
-          />
+          <div>
+            <label>Nome da Lista:</label>
+            <input
+              type="text"
+              value={listNameInput}
+              onChange={e => setListNameInput(e.target.value)}
+              placeholder="Digite o nome"
+            />
+          </div>
 
           <label>
             <input
@@ -126,16 +122,11 @@ export default function FavoritesPage() {
               onChange={handleTogglePublic}
               disabled={shareLoading}
             />
-            Público?
+            Lista pública
           </label>
-          <p
-            style={{
-              fontSize: 'small',
-              color: sharedLink.isActive ? 'green' : 'red',
-            }}
-          >
-            Status:{' '}
-            {sharedLink.isActive ? 'Público e Ativo' : 'Privado e Inativo'}
+
+          <p style={{ color: sharedLink.isActive ? 'green' : 'red' }}>
+            {sharedLink.isActive ? 'Pública e Ativa' : 'Privada e Inativa'}
           </p>
         </div>
       )}
