@@ -36,7 +36,6 @@ export default function MovieModal({
     if (isFavorite) {
       onRemoveFavorite(movie.id);
     } else {
-      console.log('Adding favorite:', movie);
       onAddFavorite(movie);
     }
   };
