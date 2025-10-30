@@ -43,19 +43,30 @@ export default function MovieModal({
   return (
     <div className="movie-modal" onClick={onClose}>
       <article onClick={e => e.stopPropagation()}>
-        <button onClick={onClose}>✕ Fechar</button>
+        <button onClick={onClose} className="close-button">
+          <img
+            src="./src/assets/images/close-button.svg"
+            alt="Fechar modal"
+            srcset=""
+          />
+        </button>
 
         <section>
           {poster && <img src={poster} alt={movie.title} />}
 
           <div>
             <h2>{movie.title}</h2>
-            <p>
-              📅 {year} • ⭐ {rating}
+            <div className="movie-infos">
+              <p>
+                📅 {year} • ⭐ <strong>{rating}</strong>
+              </p>
+            </div>
+            <p className="movie-overview">
+              {movie.overview || 'Sem sinopse disponível.'}
             </p>
-            <p>{movie.overview || 'Sem sinopse disponível.'}</p>
 
             <button
+              className="button-13"
               onClick={handleFavoriteToggle}
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
