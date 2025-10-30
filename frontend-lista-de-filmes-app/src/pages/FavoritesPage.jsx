@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useFavorites } from '../hooks/useFavorites';
 import { formatAddDate } from '../utils/formatAddDate';
 
-const BASE_SHARE_URL = import.meta.env.SHARE_URL_BASE;
+const BASE_SHARE_URL = window.location.origin + '/share/';
 
 export default function FavoritesPage() {
   const {
@@ -63,6 +63,9 @@ export default function FavoritesPage() {
     navigator.clipboard.writeText(fullLink);
     alert('Link copiado para a área de transferência!');
   };
+
+  console.log('Link base:', BASE_SHARE_URL);
+  console.log('Link Compartilhado:', sharedLink);
 
   if (loading) return <p>Carregando favoritos...</p>;
   if (error) return <p>{error}</p>;
