@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import MovieList from '../components/MovieList';
 import MovieModal from '../components/MovieModal';
@@ -8,8 +7,7 @@ import { useFavoritesMovies } from '../hooks/useFavoritesMovies';
 
 export default function SearchPage() {
   const { movies, loading, error, searchMovies } = useMoviesSearch();
-  const { addFavorite, removeFavorite, isFavorite, favorites } =
-    useFavoritesMovies();
+  const { addFavorite, removeFavorite, isFavorite } = useFavoritesMovies();
 
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,33 +31,29 @@ export default function SearchPage() {
   };
 
   return (
-    <section>
-      <p>Busque pelo nome de um filme e veja os resultados:</p>
+    <div>
+      <section>
+        <p>
+          Que tal montar sua lista de filmes e compartilhar com seus amigos?
+        </p>
+        <p>Comece buscando um filme pelo nome:</p>
 
-      {favorites.length > 0 && (
-        <Link to="/favoritos">
-          <button>
-            ⭐ {favorites.length}{' '}
-            {favorites.length === 1 ? 'favorito' : 'favoritos'}
-          </button>
-        </Link>
-      )}
+        <SearchBar onSearch={searchMovies} />
 
-      <SearchBar onSearch={searchMovies} />
+        {loading && <p>Carregando...</p>}
+        {error && <p>{error}</p>}
 
-      {loading && <p>Carregando...</p>}
-      {error && <p>{error}</p>}
+        <MovieList movies={movies} onMovieClick={handleMovieClick} />
 
-      <MovieList movies={movies} onMovieClick={handleMovieClick} />
-
-      <MovieModal
-        movie={selectedMovie}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onAddFavorite={handleAddFavorite}
-        onRemoveFavorite={handleRemoveFavorite}
-        isFavorite={selectedMovie ? isFavorite(selectedMovie.id) : false}
-      />
-    </section>
+        <MovieModal
+          movie={selectedMovie}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          onAddFavorite={handleAddFavorite}
+          onRemoveFavorite={handleRemoveFavorite}
+          isFavorite={selectedMovie ? isFavorite(selectedMovie.id) : false}
+        />
+      </section>
+    </div>
   );
 }
