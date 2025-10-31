@@ -40,6 +40,7 @@ lista-de-filmes-app/
 │  ├─ vite.config.js           # Configuração Vite
 │  └─ src/
 │     ├─ App.jsx, main.jsx
+|     ├─ assets/images         # Ícones em SVG
 |     ├─ layouts/              # Layout básico
 │     ├─ pages/                # Páginas da aplicação
 │     ├─ components/           # Componentes
@@ -208,5 +209,7 @@ Em produção, ajuste `VITE_API_BASE_URL` para a URL pública do seu back-end (e
 ## 🎯 Sobre o projeto
 
 Este repositório contém a aplicação "Lista de Filmes", desenvolvida para o desafio Verzel Elite Dev 2025.
+
+> **Página em produção:** https://lista-de-filmes-teal.vercel.app/
 
 > **Contato:** Carlos E. G. Silva | [Linkedin](http://linkedin.com/in/carlosegonzaga)
