@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSharedList } from '../hooks/useSharedList';
 
 export default function SharedListPage() {
@@ -34,11 +34,11 @@ export default function SharedListPage() {
 
   return (
     <section>
-      <h1>Lista Compartilhada: {listData.listName}</h1>
+      <h2>{listData.listName}</h2>
 
       <p>Total de Filmes: {listData.movies.length}</p>
 
-      <div>
+      <div className="favorites-list">
         {listData.movies.map(movie => (
           <article key={movie._id}>
             <h3>{movie.title}</h3>
@@ -46,12 +46,6 @@ export default function SharedListPage() {
           </article>
         ))}
       </div>
-
-      {
-        <Link to="/">
-          <button>Voltar para a Página Inicial</button>
-        </Link>
-      }
     </section>
   );
 }
