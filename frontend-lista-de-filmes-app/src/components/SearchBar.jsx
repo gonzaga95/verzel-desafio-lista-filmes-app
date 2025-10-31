@@ -13,12 +13,18 @@ export default function SearchBar({ onSearch }) {
   return (
     <form onSubmit={handleSubmit}>
       <input
+        className="searchTerm"
         type="search"
         placeholder="Digite o nome do filme"
         value={termo}
         onChange={e => setTermo(e.target.value)}
       />
-      <button type="submit">Buscar</button>
+      <button className="searchButton" type="submit">
+        <img
+          src="./src/assets/images/search-svgrepo-com.svg"
+          alt="Botão de buscar filmes"
+        />
+      </button>
     </form>
   );
 }
