@@ -64,73 +64,75 @@ export default function FavoritesPage() {
     alert('Link copiado para a área de transferência!');
   };
 
-  console.log('Link base:', BASE_SHARE_URL);
-  console.log('Link Compartilhado:', sharedLink);
-
   if (loading) return <p>Carregando favoritos...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <section>
-      <h2>Meus Filmes Favoritos</h2>
+      <div className="favorites-header">
+        <h3>Filmes Favoritos</h3>
 
-      <Link to="/">
-        <button>← Voltar para Busca</button>
-      </Link>
+        <div>
+          {!sharedLink && (
+            <button
+              className="share-toggle"
+              onClick={handleCreateLink}
+              disabled={shareLoading || favorites.length === 0}
+            >
+              <img
+                src="./src/assets/images/attach-svgrepo-com.svg"
+                alt="Ícone para compartilhar lista"
+              />
+              {shareLoading ? 'Gerando...' : 'Compartilhar'}
+            </button>
+          )}
 
-      <div>
-        {!sharedLink && (
-          <button
-            onClick={handleCreateLink}
-            disabled={shareLoading || favorites.length === 0}
-          >
-            {shareLoading ? 'Gerando...' : 'Gerar Link para Lista'}
-          </button>
-        )}
-
-        {sharedLink && (
-          <button
-            onClick={() => setShowShareOptions(prev => !prev)}
-            disabled={shareLoading}
-          >
-            {shareLoading ? 'Carregando...' : 'Compartilhar Lista'}
-          </button>
-        )}
+          {sharedLink && (
+            <button
+              className="share-toggle"
+              onClick={() => setShowShareOptions(prev => !prev)}
+              disabled={shareLoading}
+            >
+              <img
+                src="./src/assets/images/attach-svgrepo-com.svg"
+                alt="Ícone para compartilhar lista"
+              />
+              {shareLoading ? 'Carregando...' : 'Compartilhar'}
+            </button>
+          )}
+        </div>
       </div>
 
       {sharedLink && showShareOptions && (
         <div className="share-options">
-          <h4>Link da sua lista</h4>
-
-          <p className="share-link">
-            {`${BASE_SHARE_URL}${sharedLink.shareToken}`}
-          </p>
-
-          <button onClick={handleCopyLink}>Copiar</button>
-
-          <div>
-            <label>Nome da Lista:</label>
+          <div className="share-link-section">
             <input
               type="text"
               value={listNameInput}
               onChange={e => setListNameInput(e.target.value)}
               placeholder="Digite o nome"
             />
+            <button onClick={handleCopyLink}>Copiar link</button>
           </div>
 
-          <label>
+          <div className="label">
             <input
+              id="share-active"
               type="checkbox"
               checked={sharedLink.isActive}
               onChange={handleTogglePublic}
               disabled={shareLoading}
+              aria-label="Alternar status público da lista"
             />
-            Lista pública
-          </label>
-
-          <p style={{ color: sharedLink.isActive ? 'green' : 'red' }}>
-            {sharedLink.isActive ? 'Pública e Ativa' : 'Privada e Inativa'}
-          </p>
+            <p
+              style={{
+                color: sharedLink.isActive ? 'green' : 'red',
+                margin: 0,
+              }}
+            >
+              {sharedLink.isActive ? 'Pública e Ativa' : 'Privada e Inativa'}
+            </p>
+          </div>
         </div>
       )}
 
@@ -139,7 +141,12 @@ export default function FavoritesPage() {
       )}
 
       {favorites.length > 0 && (
-        <div>
+        <div className="favorites-list">
+          <div className="favorites-list-header" aria-hidden="true">
+            <span>Título</span>
+            <span>Avaliação</span>
+            <span>Data de adição</span>
+          </div>
           {favorites.map(movie => (
             <article key={movie._id}>
               <h3>{movie.title}</h3>
