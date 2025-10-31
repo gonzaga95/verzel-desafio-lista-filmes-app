@@ -5,10 +5,11 @@
 }
 
 :root {
-  --bg: #0f172a;
-  --text: #e5e7eb;
-  --brand: #22c55e;
-  --muted: #94a3b8;
+  --bg: #fbfbfb;
+  --bg2: #e5e5e5;
+  --text: #000000;
+  --brand: #fca311;
+  --muted: #14213d;
 }
 
 html, body {
@@ -25,7 +26,7 @@ body {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
