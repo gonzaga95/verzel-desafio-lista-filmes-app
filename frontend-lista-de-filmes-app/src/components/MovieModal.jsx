@@ -44,7 +44,10 @@ export default function MovieModal({
     <div className="movie-modal" onClick={onClose}>
       <article onClick={e => e.stopPropagation()}>
         <button onClick={onClose} className="close-button">
-          <img src="./src/assets/images/close-button.svg" alt="Fechar modal" />
+          <img
+            src="./src/assets/images/close-svgrepo-com.svg"
+            alt="Fechar modal"
+          />
         </button>
 
         <section>
